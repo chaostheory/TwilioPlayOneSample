@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Twilioplayonesample by chaostheory</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Twilioplayonesample</h1>
+        <p>A Twilio sample Java app that uses Play framework 1.2.x</p>
+
+        <p class="view"><a href="https://github.com/chaostheory/TwilioPlayOneSample">View the Project on GitHub <small>chaostheory/TwilioPlayOneSample</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/chaostheory/TwilioPlayOneSample/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/chaostheory/TwilioPlayOneSample/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/chaostheory/TwilioPlayOneSample">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="twilioplayonesample" class="anchor" href="#twilioplayonesample"><span class="octicon octicon-link"></span></a>TwilioPlayOneSample</h1>
+
+<p>A FizzBuzz Twilio sample Java app that uses Play framework 1.2.x</p>
+
+<p>This web application demonstrates how to:</p>
+
+<ul>
+<li>initiate a Twilio phone call to a specified phone number</li>
+<li>read a text message as a recorded message</li>
+<li>accept user telephone pad input and respond to that input </li>
+</ul><h1>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h1>
+
+<p>This example requires:</p>
+
+<ul>
+<li>general familiarity with MVC (Model View Controller) frameworks</li>
+<li>installation of the Play Framework 1.2.x</li>
+<li>a developer account for Heroku (<a href="https://signup.heroku.com/signup/dc">https://signup.heroku.com/signup/dc</a>)</li>
+<li>a developer account for Twilio (<a href="https://www.twilio.com/try-twilio">https://www.twilio.com/try-twilio</a>)</li>
+</ul><h2>
+<a name="play-framework-installation" class="anchor" href="#play-framework-installation"><span class="octicon octicon-link"></span></a>Play Framework Installation</h2>
+
+<p>To install the Play Framework, follow the instructions found within the link:</p>
+
+<p><a href="http://www.playframework.com/documentation/1.2.7/install">http://www.playframework.com/documentation/1.2.7/install</a></p>
+
+<h2>
+<a name="heroku-setup" class="anchor" href="#heroku-setup"><span class="octicon octicon-link"></span></a>Heroku Setup</h2>
+
+<p>Heroku is a great cloud web application host. It is a great tool for prototyping and early testing.</p>
+
+<p>To set up a Play 1.2.x web application on Heroku, please refer to the following link:</p>
+
+<p><a href="https://devcenter.heroku.com/articles/getting-started-with-play">https://devcenter.heroku.com/articles/getting-started-with-play</a></p>
+
+<p>Once finished you should have a working Play instance hosted on the Heroku cloud as well as a live postgres database instance.</p>
+
+<h2>
+<a name="twilio-setup" class="anchor" href="#twilio-setup"><span class="octicon octicon-link"></span></a>Twilio Setup</h2>
+
+<p>For Twilio this sample application will need several pieces of data relevant to your Twilio account. The Account SID and Authentication Code can be found under Dev Tools &gt; Test Credentials (<a href="https://www.twilio.com/user/account/developer-tools/test-credentials">https://www.twilio.com/user/account/developer-tools/test-credentials</a>)</p>
+
+<p>This application requires the addition of a TWIML app to your Twilio developer account. When adding it, you may be required to the callback URL to the sample application's ask route. The sample application's ask route is: Your Heroku App URL/ask (e.g. <a href="http://calm-anchorage-1234.herokuapp.com/ask">http://calm-anchorage-1234.herokuapp.com/ask</a>). Once added, the TWIML app will provide you with the Application SID.</p>
+
+<p>This application will also need verified phone numbers. To verify a phone number, go to Numbers (<a href="https://www.twilio.com/user/account/phone-numbers/incoming">https://www.twilio.com/user/account/phone-numbers/incoming</a>) and add your phone to be verified by Twilio.</p>
+
+<h1>
+<a name="overview" class="anchor" href="#overview"><span class="octicon octicon-link"></span></a>Overview</h1>
+
+<p>Here's a high level description to describe what's occuring and how this application works. HINT: Take a look at the Application.java Play controller.</p>
+
+<p>1) The user posts the phone number she wants to be called by Twilio, as well as the delay in seconds before Twilio makes the call.</p>
+
+<pre><code>User &lt;= =&gt; app.index
+User =&gt; app.phone
+</code></pre>
+
+<p>2) The sample application makes a phone call request, providing relevant data related to authentication, as well the sample applcation's URL for providing phone call instructions (with details below).</p>
+
+<pre><code>app.phone =&gt; Twilio API service
+app.ask &lt;= Twilio API service
+</code></pre>
+
+<p>3) The Twilio service makes a call to the sample application, based on the provided callback URL. The ask Play action will play the initial message (asking the caller for a number) as well as listening for user entered phone digits (after the caller presses the '#' button). The ask controller Play action will then direct Twilio to perform another callback to the answer play action. </p>
+
+<pre><code>app.ask &lt;= Twilio API service
+app.answer &lt;= Twilio API service
+</code></pre>
+
+<p>4) When the Twilio service makes a call to the sample application's 'answer' action, the answer action will direct Twilio to read the Fizzbuzz sequence for the caller entered number. (<a href="http://c2.com/cgi/wiki?FizzBuzzTest">http://c2.com/cgi/wiki?FizzBuzzTest</a>)</p>
+
+<pre><code>app.answer &lt;= Twilio API service
+</code></pre>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/chaostheory">chaostheory</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
