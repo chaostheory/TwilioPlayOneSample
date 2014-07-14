@@ -1,0 +1,26 @@
+#{extends 'main.html' /} #{set title:'Hello' /}
+
+<form action="@{application.phone}" method="POST">
+	<p>
+		<label for="phone">Enter your phone number</label> <input type="text"
+			name="phone" id="phone" value="">
+	</p>
+	<p>
+		<label for="delay">Enter the call delay in seconds</label> <input
+			type="text" name="delay" id="delay" value="">
+	</p>
+	<input type="submit">
+</form>
+
+#{if olderPhoneCalls}
+<div>
+	<h3>
+		Older phone calls
+	</h3>
+	#{list items:olderPhoneCalls, as:'oldPhoneCall'}
+	<div class="post">
+		${oldPhoneCall.phone} ${oldPhoneCall.delay} ${oldPhoneCall.created.format('dd MMM yy')}
+	</div>
+	#{/list}
+</div>
+#{/if}

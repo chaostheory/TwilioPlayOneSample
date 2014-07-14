@@ -1,0 +1,5 @@
+# Application dependencies
+
+require:
+    - play
+    - com.twilio.sdk -> twilio-java-sdk 3.4.5
