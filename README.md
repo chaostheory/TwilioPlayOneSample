@@ -44,25 +44,32 @@ This application will also need verified phone numbers. To verify a phone number
 
 Here's a high level description to describe what's occuring and how this application works. HINT: Take a look at the Application.java Play controller.
 
-1. The user posts the phone number she wants to be called by Twilio, as well as the delay in seconds before Twilio makes the call.
+1) The user posts the phone number she wants to be called by Twilio, as well as the delay in seconds before Twilio makes the call.
 
+```
 User <= => app.index
 User => app.phone
+```
 
-2. The sample application makes a phone call request, providing relevant data related to authentication, as well the sample applcation's URL for providing phone call instructions (with details below).
+2) The sample application makes a phone call request, providing relevant data related to authentication, as well the sample applcation's URL for providing phone call instructions (with details below).
 
+```
 app.phone => Twilio API service
 app.ask <= Twilio API service
+```
 
-3. The Twilio service makes a call to the sample application, based on the provided callback URL. The ask Play action will play the initial message (asking the caller for a number) as well as listening for user entered phone digits (after the caller presses the '#' button). The ask controller Play action will then direct Twilio to perform another callback to the answer play action. 
+3) The Twilio service makes a call to the sample application, based on the provided callback URL. The ask Play action will play the initial message (asking the caller for a number) as well as listening for user entered phone digits (after the caller presses the '#' button). The ask controller Play action will then direct Twilio to perform another callback to the answer play action. 
 
+```
 app.ask <= Twilio API service
 app.answer <= Twilio API service
+```
 
-4. When the Twilio service makes a call to the sample application's 'answer' action, the answer action will direct Twilio to read the Fizzbuzz sequence for the caller entered number. (http://c2.com/cgi/wiki?FizzBuzzTest)
+4) When the Twilio service makes a call to the sample application's 'answer' action, the answer action will direct Twilio to read the Fizzbuzz sequence for the caller entered number. (http://c2.com/cgi/wiki?FizzBuzzTest)
 
+```
 app.answer <= Twilio API service
-
+```
 
 
 
